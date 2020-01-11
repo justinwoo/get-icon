@@ -5,7 +5,7 @@ let
 
 in
 pkgs.stdenv.mkDerivation rec {
-  name = "nixpkgs-fmt";
+  name = "get-icon";
 
   src = pkgs.fetchurl {
     url = "https://github.com/justinwoo/get-icon/releases/download/2020-01-11/get-icon";
