@@ -1,5 +1,4 @@
 use headless_chrome::Browser;
-use std::time::Duration;
 
 const USAGE_ERROR: &str = "Need arguments for what to process.
 
@@ -33,7 +32,7 @@ fn main() {
         .expect("Could not get initial tab.");
 
     let url = format!(
-        "https://www.qwant.com/?q={}&t=images",
+        "https://duckduckgo.com/?iax=images&ia=images&q={}+anime+wiki",
         term
     );
 
@@ -45,7 +44,7 @@ fn main() {
     println!("Getting element.");
 
     let element = tab
-        .wait_for_element_with_custom_timeout(".result.result--images.first a", Duration::new(5, 0))
+        .wait_for_element(".tile--img__img")
         .expect("Could not get tile element");
 
     println!("Element: {:?}", element);
@@ -58,14 +57,14 @@ fn main() {
     println!("Attrs: {:?}", attrs);
 
     let src = attrs
-        .get("href")
-        .expect("Element did not have a href attribute");
+        .get("src")
+        .expect("Element did not have a src attribute");
 
     println!("Src was {}", src);
 
     let download = std::process::Command::new("curl")
         .arg("-L")
-        .arg(format!("{}", src))
+        .arg(format!("https:{}", src))
         .arg("-o")
         .arg(path)
         .output()
